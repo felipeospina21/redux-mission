@@ -1,57 +1,70 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 import { useDispatch } from "react-redux";
-import { filterByPercentage , filterSelect} from "../../app/votesSlice";
+import { filterByPercentage, filterSelect } from "../../app/votesSlice";
+import "./Filter.css";
 
 function Filter() {
+  const [initValue, setInitiValue] = useState(true);
   const dispatch = useDispatch();
+  const defaultOption = useRef(null);
 
-  function handlePercentageClick() {
-    dispatch(filterByPercentage(false));
+  function handleRadioChange(payload) {
+    setInitiValue(!initValue);
+    dispatch(filterByPercentage(payload));
   }
 
-  function handleNumClick() {
-    dispatch(filterByPercentage(true));
-  }
-
-  function handleChange(e){
-    const value =  e.target.value
-    dispatch(filterSelect(value))
+  function handleSelectChange(e) {
+    const value = e.target.value;
+    dispatch(filterSelect(value));
   }
 
   return (
-    <div>
-      <div>
-        <input
-          type='radio'
-          placeholder='%'
-          name='filter'
-          id='percentage'
-          onClick={handlePercentageClick}
-        />
-        <label for='percentage'>Percentage</label>
-      </div>
+    <>
+      <h2>Filtros</h2>
+      <div className='filter__container'>
+        <div className='filter__element'>
+          <span className='filter__title'>
+            <strong>Ver como</strong>
+          </span>
+          <div>
+            <input
+              type='radio'
+              placeholder='%'
+              name='filter'
+              id='numeric'
+              checked={initValue}
+              onChange={() => handleRadioChange(false)}
+            />
+            <label htmlFor='numeric'>Numerico</label>
+          </div>
+          <div>
+            <input
+              type='radio'
+              placeholder='%'
+              name='filter'
+              id='percentage'
+              onChange={() => handleRadioChange(true)}
+            />
+            <label htmlFor='percentage'>Porcentaje</label>
+          </div>
+        </div>
 
-      <div>
-        <input
-          type='radio'
-          placeholder='%'
-          name='filter'
-          id='numeric'
-          onClick={handleNumClick}
-        />
-        <label for='numeric'>Numeric</label>
+        <div className='filter__element'>
+          <span className='filter__title'>
+            <strong>Filtrar por</strong>
+          </span>
+          <select name='select' onChange={handleSelectChange}>
+            <option ref={defaultOption} value='todos'>
+              todos
+            </option>
+            <option value='candidato1'>candidato1</option>
+            <option value='candidato2'>candidato2</option>
+            <option value='candidato3'>candidato3</option>
+            <option value='candidato4'>candidato4</option>
+          </select>
+        </div>
       </div>
-
-      <div>
-        <select name='select' onChange={handleChange}>
-          <option value='todos'>todos</option>
-          <option value='candidato1'>candidato1</option>
-          <option value='candidato2'>candidato2</option>
-          <option value='candidato3'>candidato3</option>
-          <option value='candidato4'>candidato4</option>
-        </select>
-      </div>
-    </div>
+    </>
   );
 }
 

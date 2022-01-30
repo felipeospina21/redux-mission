@@ -1,0 +1,14 @@
+.voteBtn__container{
+  display:flex;
+  justify-content: space-evenly;
+  margin: 2rem auto;
+}
+.voteBtn{
+  background-color: aquamarine;
+  border: none;
+  border-radius: 6px;
+  padding: 1rem 1.5rem;
+  width: 10rem;
+  height: 5rem;
+  font-size: 2rem;
+}

@@ -1,51 +1,49 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-// import Candidate1 from "../Candidates/Candidate1";
-import { thousandSeparator } from "../../utils";
+import NumericVotes from "../NumericVotes/NumericVotes";
+import PercentageVotes from "../PercentageVotes/PercentageVotes";
 
-function CandidatesVotes(props) {
+function CandidatesVotes() {
   const candidateState = useSelector(state => state.votes);
+  const [filteredCandidates, setFilteredCandidates] = useState([
+    ...candidateState.candidates,
+  ]);
 
+  useEffect(() => {
+    let filtered;
+    switch (candidateState.selectFilter) {
+      case "todos":
+        setFilteredCandidates(candidateState.candidates);
+        break;
+      case "candidato1":
+        filtered = candidateState.candidates.filter(cand => cand.id === 1);
+        setFilteredCandidates(filtered);
+        break;
+      case "candidato2":
+        filtered = candidateState.candidates.filter(cand => cand.id === 2);
+        setFilteredCandidates(filtered);
+        break;
+      case "candidato3":
+        filtered = candidateState.candidates.filter(cand => cand.id === 3);
+        setFilteredCandidates(filtered);
+        break;
+      case "candidato4":
+        filtered = candidateState.candidates.filter(cand => cand.id === 4);
+        setFilteredCandidates(filtered);
+        break;
+      default:
+        break;
+    }
+  }, [candidateState.selectFilter, candidateState.candidates]);
   return (
     <>
-      {/* {switch (key) {
-        case 'todos':
-          
-          break;
-      
-        default:
-          break;
-      }} */}
+      {!candidateState.isPercentage ? (
+        <NumericVotes candidates={filteredCandidates} />
+      ) : (
+        <PercentageVotes candidates={filteredCandidates} />
+      )}
     </>
   );
 }
 
 export default CandidatesVotes;
-
-// candidateState.isPercentage ? (
-//   <div>
-//     <div>Votos Candidato 1 ({candidateState.candidato1}) puntos</div>
-//     <div>Votos Candidato 2 ({candidateState.candidato2}) puntos</div>
-//     <div>Votos Candidato 3 ({candidateState.candidato3}) puntos</div>
-//     <div>Votos Candidato 4 ({candidateState.candidato4}) puntos</div>
-//   </div>
-// ) : (
-//   <div>
-//     <div>
-//       Votos Candidato 1 (
-//       {thousandSeparator(candidateState.candidato1Percentage * 100)}) %
-//     </div>
-//     <div>
-//       Votos Candidato 2 (
-//       {thousandSeparator(candidateState.candidato2Percentage * 100)}) %
-//     </div>
-//     <div>
-//       Votos Candidato 3 (
-//       {thousandSeparator(candidateState.candidato3Percentage * 100)}) %
-//     </div>
-//     <div>
-//       Votos Candidato 4 (
-//       {thousandSeparator(candidateState.candidato4Percentage * 100)}) %
-//     </div>
-//   </div>
-// )

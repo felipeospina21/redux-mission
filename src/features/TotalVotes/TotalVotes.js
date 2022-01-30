@@ -1,12 +1,12 @@
-import React from 'react';
-import {useSelector} from 'react-redux'
+import React from "react";
+import { useSelector } from "react-redux";
+import './TotalVotes.css'
 
-function TotalVotes(props) {
-  const votes = useSelector(state => state.votes.totalVotes)
-  console.log(votes)
+function TotalVotes() {
+  const votes = useSelector(state => state.votes.totalVotes);
   return (
-    <div>
-      {votes}
+    <div className="totalVotes__container">
+      <strong>Total votos {votes}</strong>
     </div>
   );
 }

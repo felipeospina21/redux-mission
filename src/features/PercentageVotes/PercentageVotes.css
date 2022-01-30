@@ -1,0 +1,15 @@
+.percentageVotes__wrapper{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 3rem auto;
+  width: fit-content;
+}
+
+.percentageVotes__container{
+  background-color: cyan;
+  padding: 0.3rem 2rem;
+  margin: 0.5rem auto;
+  border-radius: 6px;
+}
